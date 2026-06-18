@@ -24,3 +24,13 @@ To do this, we are using a CTDE (Centralized Training Decentralized Execution) a
     uv sync
     ```
 
+4. **Run inference**
+    ```bash
+    uv run inference.py models/model_1
+    ```
+
+    By default, this will test on the environment config file where the model was originally trained. You can also test on a new config though.
+
+    ```bash
+    uv run inference.py models/model_1 configs/bottleneck.yaml
+    ```
