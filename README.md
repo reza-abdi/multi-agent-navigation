@@ -137,3 +137,7 @@ The reward function incentivizes reaching the goal while avoiding collisions:
 -   **Collision** (Obstacle, Boundary, or Agent): `-10`
 -   **Progress Reward**: Scaled by speed and alignment with the goal direction (encourages moving efficiently towards the target).
 -   **Time Penalty (Stay Alive)**: `-0.05` per step (encourages reaching the goal quickly).
+
+## Network Architecture
+
+The model architecture (found in `rl/mappo.py` and `networks/actor_critic_network.py`) implements the Actor-Critic method with shared features.
