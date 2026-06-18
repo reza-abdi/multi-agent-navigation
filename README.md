@@ -78,3 +78,15 @@ A variety of pre-configured environments are provided for your experiments in th
 6. Four Crossing
 
    ![Four Crossing](images/fourcross.png)
+
+
+## Creating Custom Environments
+
+You can define your own environments by creating a new `.yaml` file in the `configs/` directory. The configuration schema is defined in `nav/config_models.py`.
+
+Key components of a configuration file:
+- **Boundary**: Defines the polygon vertices for the playable area.
+- **Agents**: Specifies start/goal zones (rectangles), physical properties (radius, max speed), and sensor settings (FOV, range).
+- **Obstacles**: Defines static or moving obstacles (rectangles or circles).
+
+For reference, check `configs/basic_env.yaml` for a simple setup or `configs/moving_env.yaml` for dynamic obstacles.
