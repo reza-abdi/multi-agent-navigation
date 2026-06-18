@@ -90,3 +90,50 @@ Key components of a configuration file:
 - **Obstacles**: Defines static or moving obstacles (rectangles or circles).
 
 For reference, check `configs/basic_env.yaml` for a simple setup or `configs/moving_env.yaml` for dynamic obstacles.
+
+## MAPPO Configuration
+
+The training configuration and hyperparameters are defined in `train_mappo.py`.
+
+Key settings include:
+- **History Length**: `history_length = 4` (Number of past frames stacked).
+- **Batch Size**: `batch_size=128` (Number of samples per update).
+- **Learning Rate**: `learning_rate=5e-4`.
+- **Inference Interval**: `inference_interval=5` (How often to run evaluation episodes).
+- **Network Architecture**: The policy network uses an `ObservationEncoder` which processes LIDAR data and agent states, outputting a feature vector of size 384.
+
+To modify these, edit the `MAPPO` initialization in `train_mappo.py`.
+
+## Rendering
+
+Check out `nav/live_renderer.py` to see useful rendering settings.
+
+## Environment Details
+
+The environment specifications are defined in `nav/environment.py`.
+
+### Observation Space (`Box`)
+Each agent receives a composite observation consisting of:
+1.  **State Vector**:
+    -   Progress towards goal (normalized 0-1).
+    -   Cosine of the angle between the agent's heading and the goal.
+    -   Current speed ratio (current_speed / max_speed).
+    -   Distance to goal.
+    -   Goal vector (x, y).
+2.  **LIDAR Readings**:
+    -   A set of raycasts (default 60 rays).
+    -   Each ray returns 3 channels: [Distance to Obstacle, Distance to Boundary, Distance to Agent].
+    -   Stacked with `history_length` (default 4) frames to provide temporal context.
+
+### Action Space (`Box(2,)`)
+The agent controls its movement via a continuous 2D vector:
+-   `[vx, vy]`: Velocity components in the X and Y directions.
+-   Values are clipped to the range `[-1, 1]` and scaled by the agent's `max_speed`.
+-   The action is applied in the Local Coordinate Space of the agent, where the origin is at the agent's center, and the Y-axis is the agent's goal vector.
+
+### Reward Structure
+The reward function incentivizes reaching the goal while avoiding collisions:
+-   **Goal Reached**: `+10`
+-   **Collision** (Obstacle, Boundary, or Agent): `-10`
+-   **Progress Reward**: Scaled by speed and alignment with the goal direction (encourages moving efficiently towards the target).
+-   **Time Penalty (Stay Alive)**: `-0.05` per step (encourages reaching the goal quickly).
