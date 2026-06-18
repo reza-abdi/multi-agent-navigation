@@ -1,5 +1,8 @@
 # Multi Agent Navigation
 
+![Multi Agent Navigation Demo](images/marl1.gif)
+
+
 ## Project Description
 The core RL task involves multiple agents (represented as colored circles and arrow-heads) navigating from their starting positions to their respective end goals while avoiding collisions with other agents and static obstacles. 
 
