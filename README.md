@@ -25,7 +25,7 @@ To do this, we are using a CTDE (Centralized Training Decentralized Execution) a
     # Using uv
     uv sync
     ```
-    
+
 3.  **Train a new model:**
     ```bash
     uv run train_mappo.py model_id configs/config.yaml
@@ -48,3 +48,33 @@ To do this, we are using a CTDE (Centralized Training Decentralized Execution) a
     ```bash
     uv run inference.py models/model_1 configs/bottleneck.yaml
     ```
+
+
+
+## Included Environments
+
+A variety of pre-configured environments are provided for your experiments in the `configs/` directory.
+
+1. Basic
+
+   ![Basic Environment](images/basic.png)
+
+2. Circle
+
+   ![Circle Environment](images/circle.png)
+
+3. Moving Environment
+
+   ![Moving Environment](images/moving.png)
+
+4. Hallway
+
+   ![Hallway](images/hallway.png)
+
+5. Bottleneck
+
+   ![Bottleneck](images/bottleneck.png)
+
+6. Four Crossing
+
+   ![Four Crossing](images/fourcross.png)
