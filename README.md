@@ -2,7 +2,6 @@
 
 ![Multi Agent Navigation Demo](images/marl1.gif)
 
-
 ## Project Description
 The core RL task involves multiple agents (represented as colored circles and arrow-heads) navigating from their starting positions to their respective end goals while avoiding collisions with other agents and static obstacles. 
 
@@ -26,6 +25,18 @@ To do this, we are using a CTDE (Centralized Training Decentralized Execution) a
     # Using uv
     uv sync
     ```
+    
+3.  **Train a new model:**
+    ```bash
+    uv run train_mappo.py model_id configs/config.yaml
+    ```
+
+    For example:
+    ```bash
+    uv run train_mappo.py model_1 configs/basic_env.yaml
+    ```
+
+    This will create a new model inside `models/model_1`. The latest model and the best all-time models are both saved.
 
 4. **Run inference**
     ```bash
