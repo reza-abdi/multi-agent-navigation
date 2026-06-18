@@ -141,3 +141,25 @@ The reward function incentivizes reaching the goal while avoiding collisions:
 ## Network Architecture
 
 The model architecture (found in `rl/mappo.py` and `networks/actor_critic_network.py`) implements the Actor-Critic method with shared features.
+
+### Shared Observation Encoder (`ObservationEncoder`)
+Both the Actor and Critic networks share a common backbone called the `ObservationEncoder`. This ensures that feature extraction from the raw environment state is consistent and efficient.
+- **Input**: Takes the agent's observation, which includes stacked history frames.
+- **Structure**: 
+    - **1D CNN**: Processes the LIDAR data (which is treated as a 1D sequence of ray intersections).
+    - **Agent Network (MLP)**: Processes the scalar agent states (velocity, distance to goal, etc.).
+    - **Dense Layer**: Concatenates the outputs of the CNN and the MLP to produce a unified feature vector (default dimension 384).
+
+### Centralized Critic (`CentralizedCriticNetwork`)
+The critic evaluates the value of a state for **all agents**, making it "centralized". 
+- **Attention Mechanism**: It uses a Multi-Head Attention (MHA) layer to process the states of all agents. By attending to other agents' encoded states, the critic can learn cooperative behaviors and anticipate interactions.
+- **Output**: A single scalar value representing the estimated return (value) of the global state.
+
+Currently the environment also has a "state" function, but we are not using it, left for future work.
+
+
+### Decentralized Actor (`DecentralizedActorNetwork`)
+The actor decides the action for a **single agent**, making it "decentralized" during execution.
+- **Input**: Takes the shared feature vector from the `ObservationEncoder`.
+- **Structure**: A standard MLP (Multi-Layer Perceptron) that maps features to action probabilities.
+- **Output**: A probability distribution (Diagonal Gaussian) over the action space, from which the agent samples its movement commands.
