@@ -16,10 +16,11 @@ To do this, we are using a CTDE (Centralized Training Decentralized Execution) a
 
 ### Installation
 
-1.  **Clone the repository:**
+1.  **Clone the repository**
 
 2.  **Install dependencies:**
     ```bash
     # Using uv
     uv sync
     ```
+
